@@ -1,7 +1,7 @@
 # Личный проект «Кэндишоп» [![Build status][travis-image]][travis-url]
 
 * Студент: [Виоланта Свирид](https://up.htmlacademy.ru/javascript/15/user/564145).
-* Наставник: `Неизвестно`.
+* Наставник: [Анна Тюрина](https://https://htmlacademy.ru/profile/anntv).
 
 ---
 
