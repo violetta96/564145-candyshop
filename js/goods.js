@@ -1,5 +1,45 @@
 'use strict';
 
+var GOODS_AMOUNT = 26;
+var ORDER_AMOUNT = 3;
+var RATING_NUMBER = 5;
+var AMOUNT_NUMBER = 5;
+var SRC = 'img/cards/';
+
+
+var AMOUNT = {
+  min: 0,
+  max: 20
+};
+
+var PRICE = {
+  min: 100,
+  max: 1500
+};
+
+var WEIGHT = {
+  min: 30,
+  max: 300
+};
+
+var RATING = {
+  value: {
+    min: 1,
+    max: 5
+  },
+  number: {
+    min: 10,
+    max: 900
+  }
+};
+
+var NUTRITION_FACTS = {
+  energy: {
+    min: 70,
+    max: 500
+  }
+};
+
 var NAMES = [
   'Чесночные сливки',
   'Огуречный педант',
@@ -32,37 +72,37 @@ var NAMES = [
 ];
 
 var PICTURES = [
-  'img/cards/gum-cedar.jpg',
-  'img/cards/gum-chile.jpg',
-  'img/cards/gum-eggplant.jpg',
-  'img/cards/gum-mustard.jpg',
-  'img/cards/gum-portwine.jpg',
-  'img/cards/gum-wasabi.jpg',
-  'img/cards/ice-eggplant.jpg',
-  'img/cards/ice-cucumber.jpg',
-  'img/cards/ice-garlic.jpg',
-  'img/cards/ice-italian.jpg',
-  'img/cards/ice-mushroom.jpg',
-  'img/cards/ice-pig.jpg',
-  'img/cards/marmalade-beer.jpg',
-  'img/cards/marmalade-caviar.jpg',
-  'img/cards/marmalade-corn.jpg',
-  'img/cards/marmalade-new-year.jpg',
-  'img/cards/marmalade-sour.jpg',
-  'img/cards/marshmallow-bacon.jpg',
-  'img/cards/marshmallow-beer.jpg',
-  'img/cards/marshmallow-shrimp.jpg',
-  'img/cards/marshmallow-spicy.jpg',
-  'img/cards/marshmallow-wine.jpg',
-  'img/cards/soda-bacon.jpg',
-  'img/cards/soda-celery.jpg',
-  'img/cards/soda-cob.jpg',
-  'img/cards/soda-garlic.jpg',
-  'img/cards/soda-peanut-grapes.jpg',
-  'img/cards/soda-russian.jpg',
+  'gum-cedar.jpg',
+  'gum-chile.jpg',
+  'gum-eggplant.jpg',
+  'gum-mustard.jpg',
+  'gum-portwine.jpg',
+  'gum-wasabi.jpg',
+  'ice-eggplant.jpg',
+  'ice-cucumber.jpg',
+  'ice-garlic.jpg',
+  'ice-italian.jpg',
+  'ice-mushroom.jpg',
+  'ice-pig.jpg',
+  'marmalade-beer.jpg',
+  'marmalade-caviar.jpg',
+  'marmalade-corn.jpg',
+  'marmalade-new-year.jpg',
+  'marmalade-sour.jpg',
+  'marshmallow-bacon.jpg',
+  'marshmallow-beer.jpg',
+  'marshmallow-shrimp.jpg',
+  'marshmallow-spicy.jpg',
+  'marshmallow-wine.jpg',
+  'isoda-bacon.jpg',
+  'soda-celery.jpg',
+  'soda-cob.jpg',
+  'soda-garlic.jpg',
+  'soda-peanut-grapes.jpg',
+  'soda-russian.jpg',
 ];
 
-var CONTENT = [
+var CONTENTS = [
   'молоко',
   'сливки',
   'вода',
@@ -83,7 +123,7 @@ var CONTENT = [
   'виллабаджо',
 ];
 
-var VALUE = [
+var VALUES = [
   'one',
   'two',
   'three',
@@ -120,8 +160,8 @@ var getRandomNumber = function (rand) {
   return rand[Math.floor(Math.random() * rand.length)];
 };
 
-var getRandomInt = function (min, max) {
-  return Math.round(Math.random() * (max - min + 1) + min);
+var getRandomInt = function (object) {
+  return Math.round(Math.random() * (object.max - object.min + 1) + object.min);
 };
 
 var getRandomContents = function (items) {
@@ -135,78 +175,74 @@ var getRandomContents = function (items) {
 
 var getRandomBoolean = function () {
   var boolean = getRandomInt(0, 1);
-  if (boolean === 1) {
-    boolean = true;
-  } else {
-    boolean = false;
-  }
+  boolean = (boolean === 1) ? true : false;
   return boolean;
 };
 
 var getRating = function (element, good) {
   var ratingElement = element.querySelector('.stars__rating');
-  if (good.rating.value !== 5) {
+  if (good.rating.value !== RATING_NUMBER) {
     ratingElement.classList.remove('stars__rating--five');
-    ratingElement.classList.add('stars__rating--' + VALUE[good.rating.value]);
+    ratingElement.classList.add('stars__rating--' + VALUES[good.rating.value]);
   }
 };
 
-var getNutrition = function (element, good) {
-  if (!good.nutritionFacts.sugar) {
-    element.querySelector('.card__characteristic').textContent = 'Без сахара. ' + good.nutritionFacts.energy + ' ккал';
-  } else {
-    element.querySelector('.card__characteristic').textContent = 'Содержит сахар. ' + good.nutritionFacts.energy + ' ккал';
-  }
+var getNutrition = function (good) {
+  var sugar;
+  sugar = (!good.nutritionFacts.sugar) ? 'Без сахара. ' : 'Содержит сахар. ';
+  return sugar;
 };
 
 var getAmount = function (element, good) {
-  if (good.amount > 5) {
-    element.classList.add('card--in-stock');
-  }
-  if (good.amount > 0 < 5) {
-    element.classList.add('card--little');
-  }
-  if (good.amount === 0) {
-    element.classList.add('card--soon');
+  switch (true) {
+    case (good.amount > AMOUNT_NUMBER):
+      element.classList.add('card--in-stock');
+      break;
+    case (good.amount > 0 < AMOUNT_NUMBER) :
+      element.classList.add('card--little');
+      break;
+    case (good.amount === 0) :
+      element.classList.add('card--soon');
+      break;
   }
 };
 
 var goods = [];
-for (var j = 0; j < 26; j++) {
+for (var j = 0; j < GOODS_AMOUNT; j++) {
   goods[j] = {
     name: getRandomNumber(NAMES),
-    picture: getRandomNumber(PICTURES),
-    amount: getRandomInt(0, 20),
-    price: getRandomInt(100, 1500),
-    weight: getRandomInt(30, 300),
+    picture: SRC + getRandomNumber(PICTURES),
+    amount: getRandomInt(AMOUNT),
+    price: getRandomInt(PRICE),
+    weight: getRandomInt(WEIGHT),
     rating: {
-      value: getRandomInt(1, 5),
-      number: getRandomInt(10, 900),
+      value: getRandomInt(RATING.value),
+      number: getRandomInt(RATING.number),
     },
     nutritionFacts: {
       sugar: getRandomBoolean(),
-      energy: getRandomInt(70, 500),
-      contents: getRandomContents(CONTENT),
+      energy: getRandomInt(NUTRITION_FACTS.energy),
+      contents: getRandomContents(CONTENTS),
     },
   };
 }
 
 var goodsOrder = [];
-for (var k = 0; k < 3; k++) {
+for (var k = 0; k < ORDER_AMOUNT; k++) {
   goodsOrder[k] = {
     name: getRandomNumber(NAMES),
-    picture: getRandomNumber(PICTURES),
-    amount: getRandomInt(0, 20),
-    price: getRandomInt(100, 1500),
-    weight: getRandomInt(30, 300),
+    picture: SRC + getRandomNumber(PICTURES),
+    amount: getRandomInt(AMOUNT),
+    price: getRandomInt(PRICE),
+    weight: getRandomInt(WEIGHT),
     rating: {
-      value: getRandomInt(1, 5),
-      number: getRandomInt(10, 900),
+      value: getRandomInt(RATING.value),
+      number: getRandomInt(RATING.number),
     },
     nutritionFacts: {
       sugar: getRandomBoolean(),
-      energy: getRandomInt(70, 500),
-      contents: getRandomContents(CONTENT),
+      energy: getRandomInt(NUTRITION_FACTS.energy),
+      contents: getRandomContents(CONTENTS),
     },
   };
 }
@@ -222,7 +258,8 @@ var renderCard = function (card) {
   price.childNodes[2].textContent = '/ ' + card.weight + ' Г';
   getRating(cardElement, card);
   cardElement.querySelector('.star__count').textContent = card.rating.number;
-  getNutrition(cardElement, card);
+  cardElement.querySelector('.card__characteristic').textContent = getNutrition(card) + card.nutritionFacts.energy + ' ккал';
+  cardElement.querySelector('.card__characteristic').textContent = getNutrition(card) + card.nutritionFacts.energy + ' ккал';
   cardElement.querySelector('.card__composition-list').textContent = card.nutritionFacts.contents;
   return cardElement;
 };
