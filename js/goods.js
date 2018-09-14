@@ -141,6 +141,7 @@ load.classList.add('visually-hidden');
 var catalogListElement = document.querySelector('.catalog__cards');
 var catalogOrderListElement = document.querySelector('.goods__cards');
 
+
 var catalogCardTemplate = document.querySelector('#card')
 .content
 .querySelector('.catalog__card');
@@ -284,6 +285,13 @@ catalogListElement.appendChild(fragment);
 
 var fragmentOrder = document.createDocumentFragment();
 for (var t = 0; t < goodsOrder.length; t++) {
-  fragment.appendChild(renderCardOrder(goodsOrder[k]));
+  fragment.appendChild(renderCardOrder(goodsOrder[t]));
 }
 catalogOrderListElement.appendChild(fragmentOrder);
+
+var onFavorite = function () {
+  btnFavorite.classList.add('card__btn-favorite--selected');
+};
+
+var btnFavorite = document.querySelector('.card__btn-favorite');
+btnFavorite.addEventListener('click', onFavorite());
