@@ -94,7 +94,7 @@ var PICTURES = [
   'marshmallow-shrimp.jpg',
   'marshmallow-spicy.jpg',
   'marshmallow-wine.jpg',
-  'isoda-bacon.jpg',
+  'soda-bacon.jpg',
   'soda-celery.jpg',
   'soda-cob.jpg',
   'soda-garlic.jpg',
@@ -265,15 +265,14 @@ var renderCard = function (card) {
   return cardElement;
 };
 
-var renderCardOrder = function (card) {
+var renderCardOrder = function (order) {
   var cardOrderElement = catalogCardOrderTemplate.cloneNode(true);
-  cardOrderElement.querySelector('card-order__title').textContent = card.name;
-  var picture = cardOrderElement.querySelector('card-order__img');
-  picture.src = card.picture;
-  picture.alt = card.name;
-  var priceOrder = cardOrderElement.querySelector('card-order__price');
-  priceOrder.textContent = card.price + ' ₽';
-  getAmount(cardOrderElement, card);
+  cardOrderElement.querySelector('.card-order__title').textContent = order.name;
+  var picture = cardOrderElement.querySelector('.card-order__img');
+  picture.src = order.picture;
+  picture.alt = order.name;
+  cardOrderElement.querySelector('.card-order__price').textContent = order.price + '₽';
+  getAmount(cardOrderElement, order);
   return cardOrderElement;
 };
 
@@ -290,7 +289,7 @@ for (var t = 0; t < goodsOrder.length; t++) {
 catalogOrderListElement.appendChild(fragmentOrder);
 
 var onFavorite = function () {
-  btnFavorite.classList.add('card__btn-favorite--selected');
+  btnFavorite.classList.add('.card__btn-favorite--selected');
 };
 
 var btnFavorite = document.querySelector('.card__btn-favorite');
