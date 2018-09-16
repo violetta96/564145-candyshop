@@ -40,6 +40,13 @@ var NUTRITION_FACTS = {
   }
 };
 
+var GOOD_LENGTH = {
+  energy: {
+    min: 0,
+    max: 26
+  }
+};
+
 var NAMES = [
   'Чесночные сливки',
   'Огуречный педант',
@@ -131,6 +138,7 @@ var VALUES = [
   'five'
 ];
 
+
 var cards = document.querySelector('.catalog__cards');
 cards.classList.remove('catalog__cards--load');
 
@@ -139,7 +147,6 @@ load.classList.add('visually-hidden');
 
 
 var catalogListElement = document.querySelector('.catalog__cards');
-var catalogOrderListElement = document.querySelector('.goods__cards');
 
 
 var catalogCardTemplate = document.querySelector('#card')
@@ -230,22 +237,7 @@ for (var j = 0; j < GOODS_AMOUNT; j++) {
 
 var goodsOrder = [];
 for (var k = 0; k < ORDER_AMOUNT; k++) {
-  goodsOrder[k] = {
-    name: getRandomNumber(NAMES),
-    picture: SRC + getRandomNumber(PICTURES),
-    amount: getRandomInt(AMOUNT),
-    price: getRandomInt(PRICE),
-    weight: getRandomInt(WEIGHT),
-    rating: {
-      value: getRandomInt(RATING.value),
-      number: getRandomInt(RATING.number),
-    },
-    nutritionFacts: {
-      sugar: getRandomBoolean(),
-      energy: getRandomInt(NUTRITION_FACTS.energy),
-      contents: getRandomContents(CONTENTS),
-    },
-  };
+  goodsOrder[k] = goods[getRandomInt(GOOD_LENGTH)];
 }
 
 var renderCard = function (card) {
@@ -282,15 +274,16 @@ for (var i = 0; i < goods.length; i++) {
 }
 catalogListElement.appendChild(fragment);
 
+
 var fragmentOrder = document.createDocumentFragment();
 for (var t = 0; t < goodsOrder.length; t++) {
   fragment.appendChild(renderCardOrder(goodsOrder[t]));
 }
-catalogOrderListElement.appendChild(fragmentOrder);
+cardsOrder.appendChild(fragmentOrder);
 
 var onFavorite = function () {
   btnFavorite.classList.add('.card__btn-favorite--selected');
 };
 
 var btnFavorite = document.querySelector('.card__btn-favorite');
-btnFavorite.addEventListener('click', onFavorite());
+btnFavorite.addEventListener('click', onFavorite);
