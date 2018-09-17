@@ -40,11 +40,9 @@ var NUTRITION_FACTS = {
   }
 };
 
-var GOOD_LENGTH = {
-  energy: {
-    min: 0,
-    max: 26
-  }
+var GOOD_FACTS = {
+  min: 0,
+  max: 26
 };
 
 var NAMES = [
@@ -237,7 +235,7 @@ for (var j = 0; j < GOODS_AMOUNT; j++) {
 
 var goodsOrder = [];
 for (var k = 0; k < ORDER_AMOUNT; k++) {
-  goodsOrder[k] = goods[getRandomInt(GOOD_LENGTH)];
+  goodsOrder[k] = goods[getRandomInt(GOOD_FACTS)];
 }
 
 var renderCard = function (card) {
