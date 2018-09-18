@@ -1,7 +1,6 @@
 'use strict';
 
 var GOODS_AMOUNT = 26;
-var ORDER_AMOUNT = 3;
 var RATING_NUMBER = 5;
 var AMOUNT_NUMBER = 5;
 var SRC = 'img/cards/';
@@ -40,10 +39,6 @@ var NUTRITION_FACTS = {
   }
 };
 
-var GOOD_FACTS = {
-  min: 0,
-  max: 26
-};
 
 var NAMES = [
   'Чесночные сливки',
@@ -233,11 +228,6 @@ for (var j = 0; j < GOODS_AMOUNT; j++) {
   };
 }
 
-var goodsOrder = [];
-for (var k = 0; k < ORDER_AMOUNT; k++) {
-  goodsOrder[k] = goods[getRandomInt(GOOD_FACTS)];
-}
-
 var renderCard = function (card) {
   var cardElement = catalogCardTemplate.cloneNode(true);
   cardElement.querySelector('.card__title').textContent = card.name;
@@ -255,7 +245,28 @@ var renderCard = function (card) {
   return cardElement;
 };
 
-var renderCardOrder = function (order) {
+var fragment = document.createDocumentFragment();
+for (var i = 0; i < goods.length; i++) {
+  fragment.appendChild(renderCard(goods[i]));
+}
+catalogListElement.appendChild(fragment);
+
+// добавление выбранного товара в избранное
+
+var addFavoriteSelector = function (evt) {
+  evt.target.classList.toggle('card__btn-favorite--selected');
+};
+var favoriteClickBtn = function () {
+  var btnFavorite = document.querySelectorAll('.card__btn-favorite');
+  for (var l = 0; l < btnFavorite.length; l++) {
+    btnFavorite[l].addEventListener('click', addFavoriteSelector);
+  }
+};
+favoriteClickBtn();
+
+var addInCard = function (l) {
+  var fragmentOrder = document.createDocumentFragment();
+  var order = cards[l];
   var cardOrderElement = catalogCardOrderTemplate.cloneNode(true);
   cardOrderElement.querySelector('.card-order__title').textContent = order.name;
   var picture = cardOrderElement.querySelector('.card-order__img');
@@ -263,25 +274,24 @@ var renderCardOrder = function (order) {
   picture.alt = order.name;
   cardOrderElement.querySelector('.card-order__price').textContent = order.price + '₽';
   getAmount(cardOrderElement, order);
-  return cardOrderElement;
+  fragmentOrder.appendChild(cardOrderElement);
+  cardsOrder.appendChild(fragmentOrder);
 };
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < goods.length; i++) {
-  fragment.appendChild(renderCard(goods[i]));
-}
-catalogListElement.appendChild(fragment);
-
-
-var fragmentOrder = document.createDocumentFragment();
-for (var t = 0; t < goodsOrder.length; t++) {
-  fragment.appendChild(renderCardOrder(goodsOrder[t]));
-}
-cardsOrder.appendChild(fragmentOrder);
-
-var onFavorite = function () {
-  btnFavorite.classList.add('.card__btn-favorite--selected');
+var cardClickBtn = function () {
+  var btnCard = document.querySelectorAll('.card__btn');
+  for (var l = 0; l < btnCard.length; l++) {
+    btnCard[l].addEventListener('click', addInCard(l));
+  }
 };
+cardClickBtn();
 
-var btnFavorite = document.querySelector('.card__btn-favorite');
-btnFavorite.addEventListener('click', onFavorite);
+var rangeMove = function () {
+};
+var rangeFilter = function () {
+  var btnRange = document.querySelectorAll('.range__btn');
+  for (var l = 0; l < btnRange.length; l++) {
+    btnRange[l].addEventListener('mouseup', rangeMove());
+  }
+};
+rangeFilter();
