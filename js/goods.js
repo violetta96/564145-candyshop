@@ -286,7 +286,7 @@ var createBasketCard = function (target, l) {
 var catalogCard = document.querySelectorAll('.catalog__card');
 
 var addIdAtribute = function () {
-  for (var w = 0; w < catalogCard.length; w++) {
+  for (var w = 0; w < catalogListElement.length; w++) {
     catalogCard[w].setAttribute('id', w + 1);
   }
 };
