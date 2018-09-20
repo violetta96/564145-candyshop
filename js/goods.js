@@ -289,13 +289,13 @@ for (var w = 0; w < catalogListElement.length; w++) {
     }
   }
   if (idx !== null) {
-    goods[j] = goods[idx];
+    goods[idx];
   }
 }
 
 var addToCard = function () {
   var fragmentOrder = document.createDocumentFragment();
-  fragment.appendChild(createBasketCard(goods[j]));
+  fragment.appendChild(createBasketCard(goods[idx]));
   cardsOrder.appendChild(fragmentOrder);
 };
 
