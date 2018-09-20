@@ -267,39 +267,42 @@ favoriteClickBtn();
 
 // Добавление выбранного товара в корзину и управление товаром в корзине
 
-var createBasketCard = function (target, l) {
-  var idAttribute = cardsOrder.querySelector(target.id);
-  if (idAttribute) {
-    var cardOrderElement = catalogCardOrderTemplate.cloneNode(true);
-    var card = card[l];
-    cardOrderElement.querySelector('.card-order__title').textContent = card.name;
-    var picture = cardOrderElement.querySelector('.card-order__img');
-    picture.src = card.picture;
-    picture.alt = card.name;
-    var priceOrder = cardOrderElement.querySelector('.card-order__price');
-    priceOrder.textContent = card.price + ' ₽';
-    cardOrderElement.querySelector('.goods_card').setAttribute('id', l + 1);
-    cardsOrder.appendChild(cardOrderElement);
-  }
+var createBasketCard = function (card) {
+  var cardOrderElement = catalogCardOrderTemplate.cloneNode(true);
+  cardOrderElement.querySelector('.card-order__title').textContent = card.name;
+  var picture = cardOrderElement.querySelector('.card-order__img');
+  picture.src = card.picture;
+  picture.alt = card.name;
+  cardOrderElement.querySelector('.card-order__price').textContent = card.price + '₽';
+  cardsOrder.appendChild(cardOrderElement);
 };
 
 var catalogCard = document.querySelectorAll('.catalog__card');
 
-var addIdAtribute = function () {
-  for (var w = 0; w < catalogListElement.length; w++) {
-    catalogCard[w].setAttribute('id', w + 1);
+for (var w = 0; w < catalogListElement.length; w++) {
+  var test = w.target.closest('article');
+  var idx = null;
+  for (var p = 0; p < catalogCard.length; p++) {
+    if (catalogCard[p] === test) {
+      idx = i;
+      break;
+    }
   }
-};
-addIdAtribute();
+  if (idx !== null) {
+    goods[j] = goods[idx];
+  }
+}
 
-var addToCard = function (l) {
-  createBasketCard(catalogCard[l], l);
+var addToCard = function () {
+  var fragmentOrder = document.createDocumentFragment();
+  fragment.appendChild(createBasketCard(goods[j]));
+  cardsOrder.appendChild(fragmentOrder);
 };
 
 var cardClickBtn = function () {
   var btnCard = document.querySelectorAll('.card__btn');
   for (var l = 0; l < btnCard.length; l++) {
-    btnCard[l].addEventListener('click', addToCard(l));
+    btnCard[l].addEventListener('click', addToCard);
   }
 };
 cardClickBtn();
