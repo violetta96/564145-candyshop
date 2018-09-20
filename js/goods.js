@@ -161,8 +161,6 @@ var getRandomNumber = function (rand) {
   return rand[Math.floor(Math.random() * rand.length)];
 };
 
-var catalogCard = document.querySelector('.catalog__card');
-
 var getRandomInt = function (object) {
   return Math.round(Math.random() * (object.max - object.min + 1) + object.min);
 };
@@ -280,10 +278,19 @@ var createBasketCard = function (target, l) {
     picture.alt = card.name;
     var priceOrder = cardOrderElement.querySelector('.card-order__price');
     priceOrder.textContent = card.price + ' ₽';
+    cardOrderElement.querySelector('.goods_card').setAttribute('id', l + 1);
     cardsOrder.appendChild(cardOrderElement);
   }
 };
 
+var catalogCard = document.querySelectorAll('.catalog__card');
+
+var addIdAtribute = function () {
+  for (var w = 0; w < catalogCard.length; w++) {
+    catalogCard[w].setAttribute('id', w + 1);
+  }
+};
+addIdAtribute();
 
 var addToCard = function (l) {
   createBasketCard(catalogCard[l], l);
@@ -304,10 +311,10 @@ var deliverCourier = document.querySelector('.deliver__courier');
 var deliverStore = document.querySelector('.deliver__store');
 
 deliverToggle.addEventListener('click', function (evt) {
-  if (evt.target.id === 'deliver__courier') {
+  if (evt.target.id === '.deliver__courier') {
     deliverCourier.classList.toggle('visually-hidden');
     deliverStore.classList.toggle('visually-hidden');
-  } if (evt.target.id === 'deliver__store') {
+  } if (evt.target.id === '.deliver__store') {
     deliverStore.classList.toggle('visually-hidden');
     deliverCourier.classList.toggle('visually-hidden');
   }
