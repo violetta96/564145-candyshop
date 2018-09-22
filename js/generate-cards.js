@@ -132,13 +132,6 @@
     'five'
   ];
 
-  var cards = document.querySelector('.catalog__cards');
-  cards.classList.remove('catalog__cards--load');
-
-  var load = document.querySelector('.catalog__load');
-  load.classList.add('visually-hidden');
-
-
   var catalogListElement = document.querySelector('.catalog__cards');
 
   var catalogCardTemplate = document.querySelector('#card')
@@ -194,7 +187,7 @@
     return sugar;
   };
 
-  var getAmount = function (element, good) {
+  var setAmountClass = function (element, good) {
     switch (true) {
       case (good.amount > AMOUNT_NUMBER):
         element.classList.add('card--in-stock');
@@ -207,10 +200,11 @@
         break;
     }
   };
-  var goods = [];
+
   var generateCards = function () {
+    var newGoods = [];
     for (var j = 0; j < GOODS_AMOUNT; j++) {
-      goods[j] = {
+      newGoods[j] = {
         name: getRandomNumber(NAMES),
         picture: SRC + getRandomNumber(PICTURES),
         amount: getRandomInt(AMOUNT),
@@ -227,85 +221,18 @@
         },
       };
     }
-    return goods;
+    return newGoods;
   };
   generateCards();
 
-
-  var renderCard = function (card) {
-    var cardElement = catalogCardTemplate.cloneNode(true);
-    cardElement.querySelector('.card__title').textContent = card.name;
-    var picture = cardElement.querySelector('.card__img');
-    picture.src = card.picture;
-    picture.alt = card.name;
-    var price = cardElement.querySelector('.card__price');
-    price.childNodes[0].textContent = card.price + ' ';
-    price.childNodes[2].textContent = '/ ' + card.weight + ' Г';
-    getRating(cardElement, card);
-    cardElement.querySelector('.star__count').textContent = card.rating.number;
-    cardElement.querySelector('.card__characteristic').textContent = getNutrition(card) + card.nutritionFacts.energy + ' ккал';
-    cardElement.querySelector('.card__characteristic').textContent = getNutrition(card) + card.nutritionFacts.energy + ' ккал';
-    cardElement.querySelector('.card__composition-list').textContent = card.nutritionFacts.contents;
-    getAmount(cardElement, card);
-    return cardElement;
+  window.generateCard = {
+    getRating: getRating,
+    setAmountClass: setAmountClass,
+    getNutrition: getNutrition,
+    catalogListElement: catalogListElement,
+    catalogCardTemplate: catalogCardTemplate,
+    generateCards: generateCards,
+    catalogCardOrderTemplate: catalogCardOrderTemplate,
+    cardsOrder: cardsOrder
   };
-
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < goods.length; i++) {
-    fragment.appendChild(renderCard(goods[i]));
-  }
-  catalogListElement.appendChild(fragment);
-
-  // добавление выбранного товара в избранное
-
-  var favoriteClickBtnHandler = function (evt) {
-    evt.target.classList.toggle('card__btn-favorite--selected');
-  };
-  var favoriteClickBtn = function () {
-    var btnFavorite = document.querySelectorAll('.card__btn-favorite');
-    for (var l = 0; l < btnFavorite.length; l++) {
-      btnFavorite[l].addEventListener('click', favoriteClickBtnHandler);
-    }
-  };
-  favoriteClickBtn();
-
-  // Добавление выбранного товара в корзину и управление товаром в корзине
-
-  var createBasketCard = function (card, id) {
-    var cardOrderElement = catalogCardOrderTemplate.cloneNode(true);
-    cardOrderElement.querySelector('.card-order__title').textContent = card.name;
-    cardOrderElement.setAttribute('id', id);
-    var picture = cardOrderElement.querySelector('.card-order__img');
-    picture.src = card.picture;
-    picture.alt = card.name;
-    cardOrderElement.querySelector('.card-order__price').textContent = card.price + '₽';
-  };
-
-
-  var cardBtnClickHandler = function () {
-    var catalogCard = document.querySelector('.catalog__card');
-    var btnCard = document.querySelector('.card__btn');
-    var test = btnCard.target.closest('article');
-    var idx = null;
-    var fragmentOrder = document.createDocumentFragment();
-    for (var s = 0; s < catalogCard.length; s++) {
-      if (catalogCard[s] === test) {
-        idx = s;
-        break;
-      }
-    }
-    if (idx !== null) {
-      fragmentOrder.appendChild(createBasketCard(goods[idx], idx));
-    }
-    cardsOrder.appendChild(fragmentOrder);
-  };
-
-
-  var cardClickBtn = function () {
-    var btnCards = document.querySelectorAll('.card__btn');
-    for (var l = 0; l < btnCards.length; l++) {
-      btnCards[l].addEventListener('click', cardBtnClickHandler);
-    }
-  };
-  cardClickBtn();
 })();
