@@ -132,23 +132,6 @@
     'five'
   ];
 
-  var catalogListElement = document.querySelector('.catalog__cards');
-
-  var catalogCardTemplate = document.querySelector('#card')
-  .content
-  .querySelector('.catalog__card');
-
-  var catalogCardOrderTemplate = document.querySelector('#card-order')
-  .content
-  .querySelector('.goods_card');
-
-
-  var cardsOrder = document.querySelector('.goods__cards');
-  cardsOrder.classList.remove('goods__cards--empty');
-
-  var cardEmpty = document.querySelector('.goods__card-empty');
-  cardEmpty.classList.add('visually-hidden');
-
 
   var getRandomNumber = function (rand) {
     return rand[Math.floor(Math.random() * rand.length)];
@@ -171,34 +154,6 @@
     var boolean = getRandomInt(0, 1);
     boolean = (boolean === 1) ? true : false;
     return boolean;
-  };
-
-  var getRating = function (element, good) {
-    var ratingElement = element.querySelector('.stars__rating');
-    if (good.rating.value !== RATING_NUMBER) {
-      ratingElement.classList.remove('stars__rating--five');
-      ratingElement.classList.add('stars__rating--' + VALUES[good.rating.value]);
-    }
-  };
-
-  var getNutrition = function (good) {
-    var sugar;
-    sugar = (!good.nutritionFacts.sugar) ? 'Без сахара. ' : 'Содержит сахар. ';
-    return sugar;
-  };
-
-  var setAmountClass = function (element, good) {
-    switch (true) {
-      case (good.amount > AMOUNT_NUMBER):
-        element.classList.add('card--in-stock');
-        break;
-      case (good.amount > 0 < AMOUNT_NUMBER) :
-        element.classList.add('card--little');
-        break;
-      case (good.amount === 0) :
-        element.classList.add('card--soon');
-        break;
-    }
   };
 
   var generateCards = function () {
@@ -226,13 +181,9 @@
   generateCards();
 
   window.generateCard = {
-    getRating: getRating,
-    setAmountClass: setAmountClass,
-    getNutrition: getNutrition,
-    catalogListElement: catalogListElement,
-    catalogCardTemplate: catalogCardTemplate,
+    RATING_NUMBER: RATING_NUMBER,
+    AMOUNT_NUMBER: AMOUNT_NUMBER,
+    VALUES: VALUES,
     generateCards: generateCards,
-    catalogCardOrderTemplate: catalogCardOrderTemplate,
-    cardsOrder: cardsOrder
   };
 })();
