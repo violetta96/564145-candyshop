@@ -2,8 +2,6 @@
 
 (function () {
   var GOODS_AMOUNT = 26;
-  var RATING_NUMBER = 5;
-  var AMOUNT_NUMBER = 5;
   var SRC = 'img/cards/';
 
 
@@ -124,14 +122,6 @@
     'виллабаджо',
   ];
 
-  var VALUES = [
-    'one',
-    'two',
-    'three',
-    'four',
-    'five'
-  ];
-
 
   var getRandomNumber = function (rand) {
     return rand[Math.floor(Math.random() * rand.length)];
@@ -181,9 +171,6 @@
   generateCards();
 
   window.generateCard = {
-    RATING_NUMBER: RATING_NUMBER,
-    AMOUNT_NUMBER: AMOUNT_NUMBER,
-    VALUES: VALUES,
     generateCards: generateCards,
   };
 })();

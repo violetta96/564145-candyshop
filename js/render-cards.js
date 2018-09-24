@@ -1,6 +1,16 @@
 'use strict';
 
 (function () {
+  var RATING_NUMBER = 5;
+  var AMOUNT_NUMBER = 5;
+
+  var VALUES = [
+    'one',
+    'two',
+    'three',
+    'four',
+    'five'
+  ];
 
   var catalogListElement = document.querySelector('.catalog__cards');
   var cardsOrder = document.querySelector('.goods__cards');
@@ -23,9 +33,9 @@
 
   var getRating = function (element, good) {
     var ratingElement = element.querySelector('.stars__rating');
-    if (good.rating.value !== window.generateCard.RATING_NUMBER) {
+    if (good.rating.value !== RATING_NUMBER) {
       ratingElement.classList.remove('stars__rating--five');
-      ratingElement.classList.add('stars__rating--' + window.generateCard.VALUES[good.rating.value]);
+      ratingElement.classList.add('stars__rating--' + VALUES[good.rating.value]);
     }
   };
 
@@ -37,10 +47,10 @@
 
   var setAmountClass = function (element, good) {
     switch (true) {
-      case (good.amount > window.generateCard.AMOUNT_NUMBER):
+      case (good.amount > AMOUNT_NUMBER):
         element.classList.add('card--in-stock');
         break;
-      case (good.amount > 0 < window.generateCard.AMOUNT_NUMBER) :
+      case (good.amount > 0 < AMOUNT_NUMBER) :
         element.classList.add('card--little');
         break;
       case (good.amount === 0) :
@@ -112,11 +122,8 @@
     for (var s = 0; s < catalogListElement.length; s++) {
       if (catalogCard[s] === test) {
         idx = s;
-        break;
+        fragmentOrder.appendChild(createBasketCard(goods[idx], idx));
       }
-    }
-    if (idx !== null) {
-      fragmentOrder.appendChild(createBasketCard(goods[idx], idx));
     }
     cardsOrder.appendChild(fragmentOrder);
   };
