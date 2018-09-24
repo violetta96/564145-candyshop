@@ -109,7 +109,7 @@
     var test = evt.target.closest('article');
     var idx = null;
     var fragmentOrder = document.createDocumentFragment();
-    for (var s = 0; s < catalogCard.length; s++) {
+    for (var s = 0; s < catalogListElement.length; s++) {
       if (catalogCard[s] === test) {
         idx = s;
         break;
