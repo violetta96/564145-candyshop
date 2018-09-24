@@ -74,13 +74,13 @@
     cardElement.querySelector('.card__characteristic').textContent = getNutrition(card) + card.nutritionFacts.energy + ' ккал';
     cardElement.querySelector('.card__composition-list').textContent = card.nutritionFacts.contents;
     setAmountClass(cardElement, card);
-    cardElement.querySelector.setAttribute('id', id);
+    cardElement.querySelector('.catalog__card').setAttribute('id', id);
     return cardElement;
   };
 
   var renderCatalogCards = function () {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.generateCard.generateCards.length; i++) {
+    for (var i = 0; i < goods.length; i++) {
       fragment.appendChild(renderCard(goods[i], i + 1));
     }
     catalogListElement.appendChild(fragment);
@@ -119,7 +119,7 @@
     var test = evt.target.closest('article');
     var idx = null;
     var fragmentOrder = document.createDocumentFragment();
-    for (var s = 0; s < catalogListElement.length; s++) {
+    for (var s = 0; s < catalogCard.length; s++) {
       if (catalogCard[s] === test) {
         idx = s;
         fragmentOrder.appendChild(createBasketCard(goods[idx], idx));
