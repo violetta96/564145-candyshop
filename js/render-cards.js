@@ -74,7 +74,7 @@
     cardElement.querySelector('.card__characteristic').textContent = getNutrition(card) + card.nutritionFacts.energy + ' ккал';
     cardElement.querySelector('.card__composition-list').textContent = card.nutritionFacts.contents;
     setAmountClass(cardElement, card);
-    cardElement.querySelector('.catalog__card').setAttribute('id', id);
+    cardElement.setAttribute('id', id);
     return cardElement;
   };
 
